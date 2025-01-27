@@ -1,5 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Members</title>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="font-sans">
+
+    <div class="max-w-7xl mx-auto px-6">
+      <h2
+        class="text-4xl max-md:text-3xl text-center font-extrabold text-black mb-12"
+      >
+        Meet Our Professional Team
+      </h2>
+
+      <div
+        class="grid md:grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-8 max-sm:justify-center text-center"
+      >
+        <!-- Team Member 1 -->
+        <div
+          class="bg-white h-min rounded-lg p-6 shadow-md hover:scale-105 transition-all duration-500"
+        >
+          <div class="lg:min-h-[250px]">
+            <img
+              src="https://readymadeui.com/team-1.webp"
+              alt="John Doe"
+              class="w-full rounded-lg inline-block"
+            />
+          </div>
+          <div class="mt-6">
+            <h4 class="text-gray-800 text-lg font-bold">John Doe</h4>
+            <p class="text-sm text-gray-600 mt-1">Software Engineer</p>
+            <p class="text-sm text-gray-600 mt-3 description line-clamp-2">
+              John is a seasoned software engineer with over 10 years of
+              experience in developing scalable web applications. He specializes
+              in React and Node.js, and has a passion for creating intuitive
+              user interfaces.
+            </p>
+            <button
+              class="mt-2 text-blue-600 hover:text-blue-800"
+              onclick="toggleDescription(this)"
+            >
+              Read More
+            </button>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div
+          class="bg-white h-min rounded-lg p-6 shadow-md hover:scale-105 transition-all duration-500"
+        >
+          <div class="lg:min-h-[250px]">
+            <img
+              src="https://readymadeui.com/team-2.webp"
+              alt="Mark Adair"
+              class="w-full rounded-lg inline-block"
+            />
+          </div>
+          <div class="mt-6">
+            <h4 class="text-gray-800 text-lg font-bold">Mark Adair</h4>
+            <p class="text-sm text-gray-600 mt-1">Software Engineer</p>
+            <p class="text-sm text-gray-600 mt-3 description line-clamp-2">
+              Mark is an innovative software engineer who excels in solving
+              complex problems. With a background in machine learning, he brings
+              a unique perspective to our development team.
+            </p>
+            <button
+              class="mt-2 text-blue-600 hover:text-blue-800"
+              onclick="toggleDescription(this)"
+            >
+              Read More
+            </button>
+          </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div
+          class="bg-white h-min rounded-lg p-6 shadow-md hover:scale-105 transition-all duration-500"
+        >
+          <div class="lg:min-h-[250px]">
+            <img
+              src="https://readymadeui.com/team-3.webp"
+              alt="Simon Konecki"
+              class="w-full rounded-lg inline-block"
+            />
+          </div>
+          <div class="mt-6">
+            <h4 class="text-gray-800 text-lg font-bold">Simon Konecki</h4>
+            <p class="text-sm text-gray-600 mt-1">Web Designer</p>
+            <p class="text-sm text-gray-600 mt-3 description line-clamp-2">
+              Simon is a creative web designer with an eye for detail. He
+              combines his artistic skills with technical knowledge to create
+              stunning and functional websites that leave a lasting impression
+              on users.
+            </p>
+            <button
+              class="mt-2 text-blue-600 hover:text-blue-800"
+              onclick="toggleDescription(this)"
+            >
+              Read More
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript for toggle functionality -->
+    <script>
+      function toggleDescription(button) {
+        const description = button.previousElementSibling;
+        const isExpanded = !description.classList.contains("line-clamp-2");
+
+        if (isExpanded) {
+          description.classList.add("line-clamp-2");
+          button.textContent = "Read More";
+        } else {
+          description.classList.remove("line-clamp-2");
+          button.textContent = "Read Less";
+        }
+      }
+    </script>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -121,4 +248,4 @@
         marquee3.addEventListener('animationiteration', () => resetAnimation(marquee3));
     </script>
 </body>
-</html>
+</html> -->
