@@ -25,6 +25,20 @@
             fontFamily: {
               sans: ["Inter", "sans-serif"],
             },
+            animation: {
+              marquee: "marquee 10s linear infinite",
+              "marquee-reverse": "marquee-reverse 10s linear infinite",
+            },
+            keyframes: {
+              marquee: {
+                "0%": { transform: "translateX(0%)" },
+                "100%": { transform: "translateX(-50%)" },
+              },
+              "marquee-reverse": {
+                "0%": { transform: "translateX(-50%)" },
+                "100%": { transform: "translateX(0%)" },
+              },
+            },
           },
         },
       };
@@ -33,6 +47,11 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .pause-on-hover:hover {
+        animation-play-state: paused;
+      }
+    </style>
   </head>
   <body class="font-sans">
     <div class="min-h-screen relative overflow-hidden bg-gray-900">
@@ -43,7 +62,7 @@
           alt="GNA University Campus"
           class="object-cover w-full h-full"
         />
-        <div class="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-[1px]"></div>
       </div>
 
       <!-- Navigation -->
@@ -93,7 +112,7 @@
       <div
         class="container mx-auto max-w-7xl px-6 py-12 sm:py-16 relative z-10"
       >
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
           <!-- Left Content -->
           <div class="space-y-8">
             <div class="space-y-6">
@@ -333,7 +352,7 @@
                   </div>
                 </div>
                 <button
-                  class="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold shadow-lg group text-lg py-3 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-300 flex items-center justify-center"
+                  class="w-full animate-bounce bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold shadow-lg group text-lg py-3 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-300 flex items-center justify-center"
                 >
                   Submit Application
                   <svg
@@ -373,24 +392,22 @@
     </div>
 
     <!-- Specializations Section -->
-    <section
-      class="bg-gray-50 text-gray-800 py-20 px-4 sm:px-6 lg:px-8 min-h-screen"
-    >
+    <section class="bg-gray-50 text-gray-800 sm:py-20 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         <h2
-          class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-gray-900"
+          class="text-4xl md:text-4xl font-extrabold text-center mb-16 text-gray-900"
         >
           Explore Our MBA Specializations
         </h2>
 
         <div
           id="specializations-grid"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 mb-16"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8"
         >
           <!-- Cards will be inserted here -->
         </div>
 
-        <div class="text-center">
+        <!-- <div class="text-center">
           <h3 class="text-2xl font-bold mb-4 text-gray-900">
             Why Choose Our MBA Program?
           </h3>
@@ -404,7 +421,7 @@
           >
             Download Program Brochure
           </button>
-        </div>
+        </div> -->
       </div>
 
       <div id="dialog-container"></div>
@@ -830,6 +847,36 @@
       </div>
     </section>
 
+    <!-- Our Recruiters -->
+    <section class="py-10 sm:py-16">
+      <div class="container max-w-7xl mx-auto p-4">
+        <h2 class="text-4xl text-center font-bold text-gray-800 mb-4">
+          Our Recruiters
+        </h2>
+        <div
+          class="relative flex w-full flex-col items-center justify-center overflow-hidden py-16"
+        >
+          <div class="flex flex-col w-full h-full overflow-hidden">
+            <div
+              id="marquee1"
+              class="flex animate-marquee whitespace-nowrap pause-on-hover"
+            ></div>
+
+            <div
+              id="marquee2"
+              class="flex animate-marquee-reverse whitespace-nowrap pause-on-hover"
+            ></div>
+          </div>
+          <div
+            class="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white"
+          ></div>
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white"
+          ></div>
+        </div>
+      </div>
+    </section>
+
     <script>
       const specializations = [
         {
@@ -895,7 +942,7 @@
 
       // Template for specialization card
       const createCard = (spec, index) => `
-            <div class="bg-white hover:shadow-xl transition-all duration-300 ease-in-out rounded-lg">
+            <div class="bg-white shadow hover:shadow-xl transition-all duration-300 ease-in-out rounded-lg">
                 <div class="p-6 flex flex-col h-full">
                     <div class="flex items-center mb-4">
                         <span class="text-4xl mr-4">${spec.icon}</span>
@@ -911,7 +958,7 @@
 
       // Template for dialog
       const createDialog = (spec) => `
-            <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
                 <div class="bg-white rounded-lg p-6 max-w-[425px] w-full">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-semibold">${spec.title}</h3>
@@ -984,6 +1031,94 @@
       function closeDialog() {
         document.getElementById("dialog-container").innerHTML = "";
       }
+
+      const logos = [
+        {
+          src: "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png",
+          alt: "Google Logo",
+        },
+        {
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png",
+          alt: "Microsoft Logo",
+        },
+        {
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png",
+          alt: "Facebook Logo",
+        },
+        {
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png",
+          alt: "Instagram Logo",
+        },
+        {
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png",
+          alt: "Amazon Logo",
+        },
+        {
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amazon_Alexa_logo.svg/2048px-Amazon_Alexa_logo.svg.png",
+          alt: "Amazon Alexa Logo",
+        },
+        {
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png",
+          alt: "Google G Logo",
+        },
+        {
+          src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/2560px-Logo_of_YouTube_%282015-2017%29.svg.png",
+          alt: "YouTube Logo",
+        },
+      ];
+
+      function createLogoElement(logo) {
+        return `
+                <div class="mx-8 my-4 flex items-center justify-center">
+                    <div class="w-60 h-[90px] p-4 bg-white flex items-center justify-center transition-all duration-300 shadow-lg hover:scale-110">
+                        <img src="${logo.src}" alt="${logo.alt}" class="max-w-full max-h-full object-contain">
+                    </div>
+                </div>
+            `;
+      }
+
+      function populateMarquee() {
+        const marquee1 = document.getElementById("marquee1");
+        const marquee2 = document.getElementById("marquee2");
+        const containerWidth = marquee1.offsetWidth;
+        const logoWidth = 200;
+        const logosNeeded = Math.ceil(containerWidth / logoWidth) * 2;
+
+        // Create different content for each marquee
+        let marqueeContent1 = "";
+        let marqueeContent2 = "";
+
+        // First half of logos for marquee1, second half for marquee2
+        const midPoint = Math.floor(logos.length / 2);
+        const logos1 = logos.slice(0, midPoint);
+        const logos2 = logos.slice(midPoint);
+
+        for (let i = 0; i < logosNeeded; i++) {
+          marqueeContent1 += createLogoElement(logos1[i % logos1.length]);
+          marqueeContent2 += createLogoElement(logos2[i % logos2.length]);
+        }
+
+        marquee1.innerHTML = marqueeContent1 + marqueeContent1;
+        marquee2.innerHTML = marqueeContent2 + marqueeContent2;
+      }
+
+      populateMarquee();
+      window.addEventListener("resize", populateMarquee);
+      function resetAnimation(element) {
+        element.style.animation = "none";
+        element.offsetHeight;
+        element.style.animation = null;
+      }
+
+      const marquee1 = document.getElementById("marquee1");
+      const marquee2 = document.getElementById("marquee2");
+
+      marquee1.addEventListener("animationiteration", () =>
+        resetAnimation(marquee1)
+      );
+      marquee2.addEventListener("animationiteration", () =>
+        resetAnimation(marquee2)
+      );
     </script>
   </body>
 </html>
