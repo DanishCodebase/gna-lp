@@ -54,6 +54,13 @@
     </style>
   </head>
   <body class="font-sans">
+    <!-- Add this button right after body opening tag -->
+    <button id="scrollToTop" class="fixed bottom-6 right-6 z-50 bg-yellow-500 text-gray-900 p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 translate-y-10 animate-bounce hover:bg-yellow-400" aria-label="Scroll to top">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+
     <div class="min-h-screen relative overflow-hidden bg-gray-900">
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0 z-0">
@@ -1351,6 +1358,24 @@
           button.textContent = 'Read Less';
         }
       }
+
+      // Scroll to top functionality
+      const scrollToTopBtn = document.getElementById('scrollToTop');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollToTopBtn.classList.remove('opacity-0', 'translate-y-10');
+        } else {
+          scrollToTopBtn.classList.add('opacity-0', 'translate-y-10');
+        }
+      });
+
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
     </script>
   </body>
 </html>
