@@ -393,9 +393,9 @@
 
     <!-- Outlook Ranking Section -->
     <section class="py-10 sm:py-20">
-      <div class="max-w-7xl mx-auto">
+      <div class="max-w-7xl mx-5 sm:mx-auto">
         <div class="flex justify-center items-center">
-          <img src="./assets/images/Rankings.png" alt="Rankings" class="max-w-2xl h-auto">
+          <img src="./assets/images/Rankings.png" alt="Rankings" class=" max-w-full sm:max-w-2xl h-auto">
         </div>
       </div>
     </section>
@@ -898,11 +898,29 @@
       >
         Prominent Alumni
       </h2>
-      <div
-        id="team-members"
-        class="grid md:grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-sm:justify-center text-center"
-      >
-        <!-- Team members will be inserted here by JavaScript -->
+      
+      <!-- Carousel Container -->
+      <div class="relative">
+        <div class="overflow-hidden">
+          <div id="team-members" class="flex transition-transform duration-500">
+            <!-- Cards will be inserted here using existing template -->
+          </div>
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <button onclick="prevSlide()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white p-2 rounded-full shadow-lg hover:bg-gray-100 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button onclick="nextSlide()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white p-2 rounded-full shadow-lg hover:bg-gray-100 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        
+        <!-- Dots -->
+        <div class="flex justify-center mt-6 gap-2" id="carousel-dots"></div>
       </div>
     </section>
 
@@ -1208,68 +1226,129 @@
 
       const teamMembers = [
         {
-          image: "https://readymadeui.com/team-1.webp",
-          name: "John Doe",
-          role: "Software Engineer",
+          image: "./assets/images/alumni-1.jpg",
+          name: "Anu Bala",
+          role: "MBA",
           description:
-            "John is a seasoned software engineer with over 10 years of experience in developing scalable web applications. He specializes in React and Node.js, and has a passion for creating intuitive user interfaces.",
+            "GNA University has always believed in helping and guiding its students and it was no different during the placement season. Regular classes held at our college to help us with our aptitude and technical skills were of great help.",
         },
         {
-          image: "https://readymadeui.com/team-2.webp",
-          name: "Mark Adair",
-          role: "Software Engineer",
+          image: "./assets/images/alumni-2.jpg",
+          name: "Kirandeep Kaur",
+          role: "B. COM",
           description:
-            "Mark is an innovative software engineer who excels in solving complex problems. With a background in machine learning, he brings a unique perspective to our development team.",
+            "My life at GNA university made me stronger and took me a step ahead for being an independent women. I am thankful to all the teachers who supported us and corrected us throughout our bachelors.",
         },
         {
-          image: "https://readymadeui.com/team-3.webp",
-          name: "Simon Konecki",
-          role: "Web Designer",
+          image: "./assets/images/alumni-3.jpg",
+          name: "Mansour",
+          role: "MBA",
           description:
-            "Simon is a creative web designer with an eye for detail. He combines his artistic skills with technical knowledge to create stunning and functional websites that leave a lasting impression on users.",
+            "It's an immense pleasure to be a part of GU. From studying B.Com (Hons) to MBA, GNA University provided me with the right platform and exposure to become the global citizen of today.",
         },
         {
-          image: "https://readymadeui.com/team-2.webp",
-          name: "Mark Adair",
-          role: "Software Engineer",
+          image: "./assets/images/alumni-4.jpg",
+          name: "Raman Singh",
+          role: "MBA",
           description:
-            "Mark is an innovative software engineer who excels in solving complex problems. With a background in machine learning, he brings a unique perspective to our development team.",
+            "I'm so thankful that I chose GNA University. I cherish the moments spent under the guidance of eminent faculty members and my dear friends. I'd recommend the University every time. Thank you for helping me shape my career.",
+        },
+        {
+          image: "./assets/images/alumni-5.jpg",
+          name: "Bhavna Ratu",
+          role: "MBA",
+          description:
+            "I always wanted to be a successful person. But the road to success is a rocky one. You need solid guidance and support to reach there. GNA University has been super supportive and incredibly instrumental in shaping my career.",
         },
       ];
 
+      // Keep the existing card template exactly as is
       const createTeamMemberCard = (member) => `
-  <div class="bg-white h-min rounded-lg p-6 shadow-md hover:scale-105 transition-all duration-500">
-    <div class="lg:min-h-[250px]">
-      <img src="${member.image}" alt="${member.name}" class="w-full rounded-lg inline-block" />
-    </div>
-    <div class="mt-6">
-      <h4 class="text-gray-800 text-lg font-bold">${member.name}</h4>
-      <p class="text-sm text-yellow-500 mt-1">${member.role}</p>
-      <p class="text-sm text-gray-600 mt-3 description line-clamp-2">
-        ${member.description}
-      </p>
-      <button class="mt-2 text-sm text-blue-600 hover:text-blue-800" onclick="toggleDescription(this)">
-        Read More
-      </button>
-    </div>
-  </div>
-`;
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4 p-4">
+          <div class="bg-white h-min rounded-lg p-6 shadow-md hover:scale-105 transition-all duration-500">
+            <div>
+              <img src="${member.image}" alt="${member.name}" class="w-full rounded-lg inline-block" />
+            </div>
+            <div class="mt-6">
+              <h4 class="text-gray-800 text-lg font-bold">${member.name}</h4>
+              <p class="text-sm text-yellow-500 mt-1">${member.role}</p>
+              <p class="text-sm text-gray-600 mt-3 description line-clamp-2">
+                ${member.description}
+              </p>
+              <button class="mt-2 text-sm text-blue-600 hover:text-blue-800" onclick="toggleDescription(this)">
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
 
-      // Render team members
-      document.getElementById("team-members").innerHTML = teamMembers
-        .map((member) => createTeamMemberCard(member))
-        .join("");
+      // Add carousel functionality
+      let currentSlide = 0;
+      const cardsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+      const totalSlides = Math.ceil(teamMembers.length / cardsPerSlide);
 
+      function initCarousel() {
+        // Render all cards
+        const container = document.getElementById('team-members');
+        container.innerHTML = teamMembers.map(member => createTeamMemberCard(member)).join('');
+        
+        // Create dots
+        const dotsContainer = document.getElementById('carousel-dots');
+        dotsContainer.innerHTML = Array.from({ length: totalSlides }, (_, i) => `
+          <button 
+            class="h-2 w-2 rounded-full ${i === 0 ? 'bg-yellow-500' : 'bg-gray-300'} transition-colors duration-300"
+            onclick="goToSlide(${i})"
+          ></button>
+        `).join('');
+        
+        updateCarousel();
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+      }
+
+      function goToSlide(slideIndex) {
+        currentSlide = slideIndex;
+        updateCarousel();
+      }
+
+      function updateCarousel() {
+        const container = document.getElementById('team-members');
+        const dots = document.querySelectorAll('#carousel-dots button');
+        
+        // Calculate slide position
+        const slideWidth = 100 / cardsPerSlide;
+        container.style.transform = `translateX(-${currentSlide * slideWidth * cardsPerSlide}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('bg-yellow-500', index === currentSlide);
+          dot.classList.toggle('bg-gray-300', index !== currentSlide);
+        });
+      }
+
+      // Initialize carousel
+      window.addEventListener('load', initCarousel);
+
+      // Keep existing toggleDescription function
       function toggleDescription(button) {
         const description = button.previousElementSibling;
-        const isExpanded = !description.classList.contains("line-clamp-2");
-
+        const isExpanded = !description.classList.contains('line-clamp-2');
+        
         if (isExpanded) {
-          description.classList.add("line-clamp-2");
-          button.textContent = "Read More";
+          description.classList.add('line-clamp-2');
+          button.textContent = 'Read More';
         } else {
-          description.classList.remove("line-clamp-2");
-          button.textContent = "Read Less";
+          description.classList.remove('line-clamp-2');
+          button.textContent = 'Read Less';
         }
       }
     </script>
