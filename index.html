@@ -916,7 +916,7 @@
         </h2>
 
         <!-- Carousel Container -->
-        <div class="relative">
+        <div class="relative" id="carousel-container">
           <div class="overflow-hidden">
             <div
               id="team-members"
@@ -1337,6 +1337,19 @@
         window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
       const totalSlides = Math.ceil(teamMembers.length / cardsPerSlide);
 
+      let autoSlideInterval;
+      const SLIDE_INTERVAL = 5000; // 5 seconds
+
+      function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+          nextSlide();
+        }, SLIDE_INTERVAL);
+      }
+
+      function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+      }
+
       function initCarousel() {
         // Render all cards
         const container = document.getElementById("team-members");
@@ -1359,21 +1372,32 @@
         ).join("");
 
         updateCarousel();
+        
+        // Add auto-slide functionality
+        startAutoSlide();
+
+        // Pause on hover
+        const carouselContainer = document.getElementById("carousel-container");
+        carouselContainer.addEventListener("mouseenter", stopAutoSlide);
+        carouselContainer.addEventListener("mouseleave", startAutoSlide);
       }
 
       function nextSlide() {
         currentSlide = (currentSlide + 1) % totalSlides;
         updateCarousel();
+        resetAutoSlide();
       }
 
       function prevSlide() {
         currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
         updateCarousel();
+        resetAutoSlide();
       }
 
       function goToSlide(slideIndex) {
         currentSlide = slideIndex;
         updateCarousel();
+        resetAutoSlide();
       }
 
       function updateCarousel() {
@@ -1391,6 +1415,11 @@
           dot.classList.toggle("bg-yellow-500", index === currentSlide);
           dot.classList.toggle("bg-gray-300", index !== currentSlide);
         });
+      }
+
+      function resetAutoSlide() {
+        stopAutoSlide();
+        startAutoSlide();
       }
 
       // Initialize carousel
