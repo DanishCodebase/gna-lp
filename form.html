@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPF Form Integration</title>
+</head>
+<body>
+
+    <!-- Placeholder for NoPaperForms Form -->
+    <div class="npf_wgts" data-height="500px" data-w="YOUR_WIDGET_ID"></div>
+
+    <!-- NoPaperForms Widget Script -->
+    <script type="text/javascript"> 
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://widgets.nopaperforms.com/emwgts.js";
+        s.onload = function() {
+            if (typeof window.initNpfWidgets === "function") {
+                window.initNpfWidgets(); // Force re-render of form
+            }
+        };
+        document.body.appendChild(s);
+    </script>
+
+    <!-- NoPaperForms Tracking Script -->
+    <script type="text/javascript">
+        var npf_d = "https://gna.nopaperforms.com";
+        var npf_c = "431";
+        var npf_m = "1";
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://track.nopaperforms.com/js/track.js";
+        document.body.appendChild(s);
+    </script>
+
+</body>
+</html>
