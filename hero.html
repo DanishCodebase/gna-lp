@@ -1,167 +1,480 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GNA University</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
     <style>
-        /* Custom CSS to maintain specific design elements */
-        .hero-section {
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
-            background-color: #111827;
+      /* Base styles */
+      :root {
+        --primary-red: #dc3545;
+        --primary-red-hover: #c82333;
+        --primary-red-light: #f8a5a5;
+        --dark-overlay: rgba(0, 0, 0, 0.1);
+        --card-bg: rgba(255, 255, 255, 0.08);
+        --card-bg-hover: rgba(255, 255, 255, 0.15);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --nav-bg: rgba(0, 0, 0, 0.3);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* Background and overlay styles */
+      .hero-section {
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      .bg-image {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+
+      .bg-image img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        filter: brightness(0.6);
+      }
+
+      .bg-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          var(--dark-overlay) 0%,
+          rgba(0, 0, 0, 0.35) 50%,
+          var(--dark-overlay) 100%
+        );
+        z-index: 1;
+      }
+
+      /* Navigation styles */
+      .custom-navbar {
+        position: relative;
+        z-index: 10;
+        padding: 1rem 1.5rem;
+        background-color: var(--nav-bg);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .navbar-logo {
+        transition: transform 0.3s ease;
+      }
+
+      .navbar-logo:hover {
+        transform: scale(1.02);
+      }
+
+      /* Content styles */
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        padding: 4rem 1.5rem;
+      }
+
+      .text-gradient {
+        background: linear-gradient(
+          to right,
+          var(--primary-red),
+          var(--primary-red-light)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+      }
+
+      .welcome-text {
+        color: var(--primary-red);
+        font-weight: 600;
+        font-size: 1.5rem;
+        letter-spacing: 0.5px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .welcome-text::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: var(--primary-red);
+        border-radius: 3px;
+      }
+
+      .hero-heading {
+        font-size: 3rem;
+      }
+
+      .hero-subheading {
+        font-size: 2.5rem;
+      }
+
+      @media (max-width: 576px) {
+        .welcome-text::after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      .animate-pulse {
+        animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+
+      .hero-heading {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-subheading {
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        line-height: 1.3;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .admission-text {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        position: relative;
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-left: 3px solid var(--primary-red);
+        border-radius: 0 4px 4px 0;
+        margin-top: 1.5rem;
+      }
+
+      /* Apply button styles */
+      .apply-btn {
+        background-color: var(--primary-red);
+        color: white;
+        font-weight: 400;
+        padding: 0.35rem 1rem;
+        border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        font-size: 12px !important;
+      }
+
+      .apply-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          var(--primary-red-hover),
+          var(--primary-red)
+        );
+        z-index: -1;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+      }
+
+      .apply-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(220, 53, 69, 0.5);
+        color: white;
+      }
+
+      .apply-btn:hover::before {
+        opacity: 1;
+      }
+
+      .apply-btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 10px rgba(220, 53, 69, 0.4);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 576px) {
+        .text-center-sm {
+          text-align: center;
         }
 
-        .bg-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
+        .hero-content {
+          padding: 3rem 1rem;
         }
 
-        .navbar-custom {
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
+        .hero-heading {
+          font-size: 1.95rem;
+          margin-bottom: 0rem !important;
         }
 
-        .gradient-text {
-            background: linear-gradient(to right, #DC2626, #FCA5A5);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .hero-subheading {
+          font-size: 1.25rem;
+          margin-bottom: 0rem !important;
         }
 
-        .feature-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s;
+        .admission-text {
+          margin-top: 0 !important;
         }
 
-        .feature-card:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+        .custom-navbar img {
+          max-height: 2.5rem !important;
         }
 
-        .feature-icon {
-            color: #DC2626;
-            transition: transform 0.3s;
+        .hero-content .row > * {
+          margin-top: 30px !important;
         }
+      }
 
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1);
+      @media (min-width: 992px) {
+        .hero-content {
+          padding-top: 6rem;
         }
+      }
 
-        .feature-card:hover .feature-text {
-            color: #DC2626 !important;
+      /* Animation for feature cards */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+      .feature-animation {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+      }
 
-        .pulse-animation {
-            animation: pulse 2s infinite;
-        }
+      .feature-animation:nth-child(1) {
+        animation-delay: 0.3s;
+      }
 
-        .apply-btn {
-            transition: all 0.3s;
-        }
+      .feature-animation:nth-child(2) {
+        animation-delay: 0.5s;
+      }
 
-        .apply-btn:hover {
-            transform: scale(1.05);
-        }
+      .feature-animation:nth-child(3) {
+        animation-delay: 0.7s;
+      }
+
+      .feature-animation:nth-child(4) {
+        animation-delay: 0.9s;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="hero-section">
-        <!-- Background Image -->
-        <div class="bg-overlay">
-            <img src="./assets/images/HeroSection.webp" alt="GNA University Campus" class="w-100 h-100 object-fit-cover">
-        </div>
+      <!-- Background Image with Overlay -->
+      <div class="bg-image">
+        <img
+          src="https://www.immindia.edu.in/imm/general-pgdm-lp/assets/webp/hero_section.webp"
+          alt="GNA University Campus"
+        />
+      </div>
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-custom position-relative z-3 px-3 py-2">
-            <div class="container-xxl">
-                <div class="d-flex align-items-center gap-2">
-                    <img src="./assets/images/logo.png" alt="GNA University Logo" class="h-48" style="height: 48px;">
-                    <img src="./assets/images/naac-accredited.png" alt="GNA Accreditations" class="h-48" style="height: 48px;">
-                </div>
-                <div>
-                    <button class="btn btn-danger rounded-pill px-4 py-2 d-none d-md-block apply-btn">
-                        Apply Now
-                    </button>
-                </div>
+      <!-- Added Sleek Black Overlay -->
+      <div class="bg-overlay"></div>
+
+      <!-- Navigation -->
+      <nav class="custom-navbar">
+        <div class="container">
+          <div
+            class="d-flex align-items-center justify-content-center justify-content-sm-between"
+          >
+            <div class="d-flex align-items-center gap-3 navbar-logo">
+              <img
+                src="./assets/images/logo.png"
+                alt="GNA University Logo"
+                class="h-auto"
+                style="max-height: 4rem"
+              />
+              <img
+                src="./assets/images/naac-accredited.png"
+                alt="GNA Accreditations"
+                class="h-auto"
+                style="max-height: 4rem"
+              />
             </div>
-        </nav>
-
-        <!-- Hero Content -->
-        <div class="container-xxl position-relative z-3 py-5">
-            <div class="row gy-4">
-                <div class="col-lg-6">
-                    <div class="text-center text-sm-start mb-5">
-                        <p class="text-danger fs-4 fw-medium pulse-animation">
-                            Welcome to GNA University
-                        </p>
-                        <h1 class="display-4 fw-bold text-white">
-                            Forge Your
-                            <span class="gradient-text">Leadership Path</span>
-                        </h1>
-                        <h2 class="display-6 fw-bold text-white">
-                            Premier Industry-Graded
-                            <span class="gradient-text">MBA Program</span>
-                        </h2>
-                        <p class="fs-3 fw-semibold text-white">
-                            Admissions Open for 2025-27
-                        </p>
-                    </div>
-
-                    <!-- Feature Cards -->
-                    <div class="row g-4 d-none d-sm-flex">
-                        <div class="col-sm-6 col-md-3">
-                            <div class="feature-card p-4 text-center rounded-4">
-                                <svg class="feature-icon mb-2" width="32" height="32" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <p class="feature-text text-white mb-0 fs-6 fw-medium">
-                                    Highest Package ₹10 Lakh
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="feature-card p-4 text-center rounded-4">
-                                <svg class="feature-icon mb-2" width="32" height="32" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                </svg>
-                                <p class="feature-text text-white mb-0 fs-6 fw-medium">
-                                    100% Placement Assistance
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="feature-card p-4 text-center rounded-4">
-                                <svg class="feature-icon mb-2" width="32" height="32" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                </svg>
-                                <p class="feature-text text-white mb-0 fs-6 fw-medium">
-                                    Industry Partnerships
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="feature-card p-4 text-center rounded-4">
-                                <svg class="feature-icon mb-2" width="32" height="32" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                                </svg>
-                                <p class="feature-text text-white mb-0 fs-6 fw-medium">
-                                    Cutting-edge Curriculum
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex flex-column align-items-center gap-1">
+              <button class="apply-btn d-none d-md-flex align-items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-phone-call"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                  <path d="M14.05 2a9 9 0 0 1 8 7.94" />
+                  <path d="M14.05 6A5 5 0 0 1 18 10" />
+                </svg>
+                <a
+                  href="tel:+919999078888"
+                  class="text-white ms-2 text-decoration-none"
+                  >+91 9999078888</a
+                >
+              </button>
+              <button class="apply-btn d-none d-md-flex align-items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-phone-call"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                  <path d="M14.05 2a9 9 0 0 1 8 7.94" />
+                  <path d="M14.05 6A5 5 0 0 1 18 10" />
+                </svg>
+                <a
+                  href="tel:+919999078888"
+                  class="text-white ms-2 text-decoration-none"
+                  >+91 9999078888</a
+                >
+              </button>
             </div>
+          </div>
         </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <div class="hero-content container">
+        <div class="row gy-5">
+          <!-- Left Content -->
+          <div class="col-lg-7">
+            <div class="mb-0">
+              <h2
+                class="hero-subheading admission-text display-6 fw-bold text-white text-center text-md-start"
+              >
+                Admissions Open
+                <span>25-27 Session</span>
+              </h2>
+              <h1
+                class="admission-text hero-heading fw-bold text-white text-center-sm text-sm-start"
+              >
+                AICTE Approved Flagship
+                <span class="text-gradient"
+                  >2 Years PGDM with Dual Specialisation</span
+                >
+              </h1>
+
+              <p
+                class="admission-text fs-5 text-white text-center-sm text-sm-start"
+              >
+                Artificial Intelligence & Machine Learning Infused
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Form (commented out as in original) -->
+          <!-- <div class="col-lg-5">
+          <div class="p-4 p-md-5 rounded-4 shadow" style="backdrop-filter: blur(16px); background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <h2 class="fs-2 fw-bold mb-4 text-white">
+              Start Your <span class="text-gradient">Journey</span>
+            </h2>
+            <form class="mb-3">
+              <div class="mb-3">
+                <label for="name" class="form-label text-white fs-5 fw-medium">Full Name</label>
+                <input id="name" type="text" placeholder="Enter your full name" class="form-control bg-transparent border-2 text-white" style="border-color: rgba(255, 255, 255, 0.2); --bs-placeholder-opacity: 0.7;">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label text-white fs-5 fw-medium">Email Address</label>
+                <input id="email" type="email" placeholder="Enter your email" class="form-control bg-transparent border-2 text-white" style="border-color: rgba(255, 255, 255, 0.2); --bs-placeholder-opacity: 0.7;">
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label text-white fs-5 fw-medium">Phone Number</label>
+                <input id="phone" type="tel" placeholder="Enter phone number" class="form-control bg-transparent border-2 text-white" style="border-color: rgba(255, 255, 255, 0.2); --bs-placeholder-opacity: 0.7;">
+              </div>
+              <div class="mb-4">
+                <label for="program" class="form-label text-white fs-5 fw-medium">Preferred Program</label>
+                <div class="position-relative">
+                  <select id="program" class="form-select bg-transparent border-2 text-white" style="border-color: rgba(255, 255, 255, 0.2); --bs-placeholder-opacity: 0.7;">
+                    <option value="" disabled selected>Select your program</option>
+                    <option value="mba">MBA</option>
+                    <option value="emba">Executive MBA</option>
+                    <option value="pgdm">PGDM</option>
+                    <option value="msc">M.Sc. Business Analytics</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-danger w-100 py-3 fw-bold d-flex align-items-center justify-content-center apply-btn">
+                Submit Application
+                <svg xmlns="http://www.w3.org/2000/svg" class="ms-2" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+              <p class="text-center small text-light mt-3">
+                By submitting, you agree to our
+                <a href="#" class="text-danger text-decoration-underline">Terms of Service</a>
+                and
+                <a href="#" class="text-danger text-decoration-underline">Privacy Policy</a>
+              </p>
+            </form>
+          </div>
+        </div> -->
+        </div>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
